@@ -19,7 +19,13 @@ public class ProductService {
     }
 
     @Transactional
-    public void saveProduct(ProductEntity product){
+    public void createProduct(ProductEntity product){
+        product.getPartnerEntity().getProductList().add(product);
+        productRepo.save(product);
+    }
+
+    @Transactional
+    public void updateProduct(ProductEntity product, int id){
         product.getPartnerEntity().getProductList().add(product);
         productRepo.save(product);
     }

@@ -39,7 +39,13 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Void> saveProduct(@RequestBody ProductEntity product){
-        service.saveProduct(product);
+        service.createProduct(product);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateProduct(@RequestBody ProductEntity product,@PathVariable int id){
+        service.updateProduct(product,id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 

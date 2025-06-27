@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     private final HeaderAuthInterceptor headerAuthInterceptor;
-
     @Autowired
     public WebConfig(HeaderAuthInterceptor headerAuthInterceptor) {
         this.headerAuthInterceptor = headerAuthInterceptor;

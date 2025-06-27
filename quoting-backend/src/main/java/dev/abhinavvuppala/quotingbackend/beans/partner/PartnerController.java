@@ -52,7 +52,7 @@ public class PartnerController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updatePartner(@RequestBody partnerDTO partnerDTO,@PathVariable int id){
         worker.updatePartner(partnerDTO,id);
         return ResponseEntity.ok().build();
