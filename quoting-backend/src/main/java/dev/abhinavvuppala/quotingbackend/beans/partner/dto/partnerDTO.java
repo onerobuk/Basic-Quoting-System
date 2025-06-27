@@ -1,0 +1,27 @@
+package dev.abhinavvuppala.quotingbackend.beans.partner.dto;
+
+import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerEntity;
+
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class partnerDTO {
+    private int partnerId;
+    private String partnerName;
+    private String partnerEmail;
+    private String shippingAddress;
+    private String billingAddress;
+    private boolean isSeller;
+
+    public partnerDTO(PartnerEntity partnerEntity){
+        this.partnerId = partnerEntity.getPartnerId();
+        this.partnerName = partnerEntity.getPartnerName();
+        this.partnerEmail = partnerEntity.getPartnerEmail();
+        this.shippingAddress = partnerEntity.getShippingAddress();
+        this.billingAddress = partnerEntity.getBillingAddress();
+        this.isSeller = partnerEntity.isSeller();
+    }
+
+}
