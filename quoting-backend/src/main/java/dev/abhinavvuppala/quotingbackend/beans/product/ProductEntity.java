@@ -1,6 +1,7 @@
 package dev.abhinavvuppala.quotingbackend.beans.product;
 
 import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerEntity;
+import dev.abhinavvuppala.quotingbackend.beans.product.dto.productDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,12 @@ public class ProductEntity {
 
     @Column(name = "updated_by")
     private String updatedBy;
+
+    public ProductEntity(productDTO productDTO,PartnerEntity partner){
+        this.productName = productDTO.getName();
+        this.productPrice = productDTO.getPrice();
+        this.partnerEntity = partner;
+    }
 
     public ProductEntity(String productName, double productPrice, String productCurrency, PartnerEntity partnerEntity, String createdBy){
         this.productName=productName;

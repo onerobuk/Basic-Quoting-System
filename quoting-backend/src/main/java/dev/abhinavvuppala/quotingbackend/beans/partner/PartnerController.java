@@ -46,15 +46,15 @@ public class PartnerController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPartner(@RequestBody partnerDTO partnerDTO){
-        PartnerEntity newPartner = new PartnerEntity(partnerDTO);
+    public ResponseEntity<Void> createPartner(@RequestBody partnerRequest request){
+        PartnerEntity newPartner = new PartnerEntity(request.getEntity());
         worker.createPartner(newPartner);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePartner(@RequestBody partnerDTO partnerDTO,@PathVariable int id){
-        worker.updatePartner(partnerDTO,id);
+    public ResponseEntity<Void> updatePartner(@RequestBody partnerRequest request,@PathVariable int id){
+        worker.updatePartner(request.getEntity(),id);
         return ResponseEntity.ok().build();
     }
 
