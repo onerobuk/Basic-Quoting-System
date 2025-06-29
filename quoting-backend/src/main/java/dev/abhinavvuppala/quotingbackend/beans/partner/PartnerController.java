@@ -47,14 +47,13 @@ public class PartnerController {
 
     @PostMapping
     public ResponseEntity<Void> createPartner(@RequestBody partnerRequest request){
-        PartnerEntity newPartner = new PartnerEntity(request.getEntity());
-        worker.createPartner(newPartner);
+        worker.createPartner(request);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updatePartner(@RequestBody partnerRequest request,@PathVariable int id){
-        worker.updatePartner(request.getEntity(),id);
+        worker.updatePartner(request,id);
         return ResponseEntity.ok().build();
     }
 

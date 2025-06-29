@@ -42,16 +42,15 @@ public class  ProductController {
 
     @PostMapping
     public ResponseEntity<Void> createProduct(@RequestBody productRequest productRequest){
-        productDTO product = productRequest.getEntity();
-        PartnerEntity partner = partnerService.getPartnerById(product.getSeller().getId());
-        ProductEntity productEntity = new ProductEntity(product,partner);
-        productService.createProduct(productEntity);
+        PartnerEntity partner = partnerService.getPartnerById(productRequest.getEntity().getSeller().getId());
+        ProductEntity productEntity = ProductEntity.fromDTO(productRequest,partner);
+        productService.createProduct(productEntity,partner);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateProduct(@RequestBody ProductEntity product,@PathVariable int id){
-        productService.updateProduct(product,id);
+    public ResponseEntity<Void> updateProduct(@RequestBody productRequest productRequest,@PathVariable int id){
+        productService.updateProduct(productRequest,id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 

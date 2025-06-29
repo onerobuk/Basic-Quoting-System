@@ -45,19 +45,16 @@ public class ProductEntity {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    public ProductEntity(productDTO productDTO,PartnerEntity partner){
-        this.productName = productDTO.getName();
-        this.productPrice = productDTO.getPrice();
-        this.partnerEntity = partner;
+    public static ProductEntity fromDTO(productRequest request,PartnerEntity partner){
+        productDTO productDTO = request.getEntity();
+        ProductEntity product = new ProductEntity();
+        product.productName = productDTO.getName();
+        product.productPrice = productDTO.getPrice();
+        product.partnerEntity = partner;
+        product.createdBy=product.updatedBy=request.getUsername();
+        product.productCurrency=productDTO.getCurrencyCode();
+        return product;
     }
 
-    public ProductEntity(String productName, double productPrice, String productCurrency, PartnerEntity partnerEntity, String createdBy){
-        this.productName=productName;
-        this.productPrice=productPrice;
-        this.productCurrency=productCurrency;
-        this.partnerEntity = partnerEntity;
-        this.createdBy=createdBy;
-        this.updatedBy=createdBy;
-    }
 
 }

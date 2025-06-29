@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -28,13 +30,16 @@ public class PartnerService {
     }
 
     @Transactional
-    public void updatePartner(partnerDTO partnerDTO,int id){
+    public void updatePartner(partnerRequest partnerRequest,int id){
         PartnerEntity partner = getPartnerById(id);
+        partnerDTO partnerDTO = partnerRequest.getEntity();
         partner.setPartnerName(partnerDTO.getPartnerName());
         partner.setPartnerEmail(partnerDTO.getPartnerEmail());
         partner.setShippingAddress(partnerDTO.getShippingAddress());
         partner.setBillingAddress(partnerDTO.getBillingAddress());
         partner.setSeller(partnerDTO.isSeller());
+        partner.setUpdatedAt(OffsetDateTime.now(ZoneOffset.UTC));
+        partner.setUpdatedBy(partnerRequest.getUsername());
     }
 
     @Transactional
@@ -44,7 +49,8 @@ public class PartnerService {
     }
 
     @Transactional
-    public void createPartner(PartnerEntity newPartnerEntity){
+    public void createPartner(partnerRequest partnerRequest){
+        PartnerEntity newPartnerEntity = new PartnerEntity(partnerRequest.getEntity(),partnerRequest.getUsername());
         repository.save(newPartnerEntity);
     }
 

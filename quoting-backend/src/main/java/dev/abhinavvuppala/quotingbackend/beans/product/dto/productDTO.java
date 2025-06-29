@@ -14,11 +14,13 @@ public class productDTO {
     private String name;
     private double price;
     private sellerDTO seller;
+    private String currencyCode;
 
     public productDTO(ProductEntity product){
         this.id= product.getProductId();
         this.name = product.getProductName();
         this.price = product.getProductPrice();
         this.seller = new sellerDTO(product.getPartnerEntity());
+        this.currencyCode = product.getProductCurrency();
     }
 }

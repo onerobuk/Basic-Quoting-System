@@ -1,6 +1,7 @@
 package dev.abhinavvuppala.quotingbackend.beans.quoteLine;
 
 import dev.abhinavvuppala.quotingbackend.beans.product.ProductEntity;
+import dev.abhinavvuppala.quotingbackend.beans.quoteLine.dto.quotelineDTO;
 import dev.abhinavvuppala.quotingbackend.beans.quoteRevision.quoteRevisionEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -48,4 +49,16 @@ public class quoteLineEntity {
 
     @Column(name = "updated_by")
     private String updatedBy;
+
+    public static quoteLineEntity fromDTO(quotelineRequest request,quoteRevisionEntity revision,ProductEntity product){
+        quotelineDTO DTO = request.getEntity();
+        quoteLineEntity entity = new quoteLineEntity();
+        entity.quoteRevision = revision;
+        entity.product = product;
+        entity.quantity = DTO.getQuantity();
+        entity.price = DTO.getPrice();
+        entity.currencyCode = DTO.getCurrencyCode();
+        entity.createdBy=entity.updatedBy=request.getUsername();
+        return entity;
+    }
 }

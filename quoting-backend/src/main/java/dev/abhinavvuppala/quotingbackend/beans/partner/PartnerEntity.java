@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -62,11 +63,13 @@ public class PartnerEntity {
         this.updatedBy = createdBy;
     }
 
-    public PartnerEntity(partnerDTO partnerDTO) {
+    public PartnerEntity(partnerDTO partnerDTO,String createdBy) {
         this.partnerName = partnerDTO.getPartnerName();
         this.partnerEmail = partnerDTO.getPartnerEmail();
         this.shippingAddress = partnerDTO.getShippingAddress();
         this.billingAddress = partnerDTO.getBillingAddress();
         this.isSeller = partnerDTO.isSeller();
+        this.updatedBy=this.createdBy=createdBy;
+        this.productList=new ArrayList<>();
     }
 }
