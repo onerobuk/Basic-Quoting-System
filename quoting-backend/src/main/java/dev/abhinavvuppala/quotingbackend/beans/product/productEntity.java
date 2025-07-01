@@ -13,7 +13,7 @@ import java.time.ZoneOffset;
 @Table(name = "product")
 @Data
 @NoArgsConstructor
-public class ProductEntity {
+public class productEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,9 +45,9 @@ public class ProductEntity {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    public static ProductEntity fromDTO(productRequest request,PartnerEntity partner){
+    public static productEntity fromDTO(productRequest request, PartnerEntity partner){
         productDTO productDTO = request.getEntity();
-        ProductEntity product = new ProductEntity();
+        productEntity product = new productEntity();
         product.productName = productDTO.getName();
         product.productPrice = productDTO.getPrice();
         product.partnerEntity = partner;

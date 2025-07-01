@@ -13,11 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-public class  ProductController {
-    private final ProductService productService;
+public class productController {
+    private final productService productService;
     private final PartnerService partnerService;
+
     @Autowired
-    public ProductController(ProductService service, PartnerService partnerService) {
+    public productController(productService service, PartnerService partnerService) {
         this.productService = service;
         this.partnerService = partnerService;
     }
@@ -43,7 +44,7 @@ public class  ProductController {
     @PostMapping
     public ResponseEntity<Void> createProduct(@RequestBody productRequest productRequest){
         PartnerEntity partner = partnerService.getPartnerById(productRequest.getEntity().getSeller().getId());
-        ProductEntity productEntity = ProductEntity.fromDTO(productRequest,partner);
+        productEntity productEntity = dev.abhinavvuppala.quotingbackend.beans.product.productEntity.fromDTO(productRequest,partner);
         productService.createProduct(productEntity,partner);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }

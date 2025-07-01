@@ -3,7 +3,7 @@ package dev.abhinavvuppala.quotingbackend.beans.partner;
 import dev.abhinavvuppala.quotingbackend.beans.partner.dto.partnerDTO;
 import dev.abhinavvuppala.quotingbackend.beans.partner.dto.partnerMetadataDTO;
 import dev.abhinavvuppala.quotingbackend.beans.partner.dto.partnerSummaryDTO;
-import dev.abhinavvuppala.quotingbackend.beans.product.ProductEntity;
+import dev.abhinavvuppala.quotingbackend.beans.product.productEntity;
 import dev.abhinavvuppala.quotingbackend.beans.product.dto.productDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class PartnerController {
 
     @GetMapping("/{id}/products")
     public ResponseEntity<List<productDTO>> getProducts(@PathVariable int id) throws EntityNotFoundException{
-        List<ProductEntity> productList = worker.getProducts(id);
+        List<productEntity> productList = worker.getProducts(id);
         List<productDTO> productDTOList = productList.stream().map(productDTO::new).toList();
         return ResponseEntity.ok(productDTOList);
     }

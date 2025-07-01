@@ -1,6 +1,6 @@
 package dev.abhinavvuppala.quotingbackend.beans.quoteLine.dto;
 
-import dev.abhinavvuppala.quotingbackend.beans.quoteLine.quoteLineEntity;
+import dev.abhinavvuppala.quotingbackend.beans.quoteLine.quotelineEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class QLMetadataDTO {
 
     private String updatedBy;
 
-    public QLMetadataDTO(quoteLineEntity qlEntity){
+    public QLMetadataDTO(quotelineEntity qlEntity){
         this.createdAt = qlEntity.getCreatedAt();
         this.updatedAt = qlEntity.getUpdatedAt();
         this.createdBy = qlEntity.getCreatedBy();

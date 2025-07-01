@@ -2,7 +2,7 @@ package dev.abhinavvuppala.quotingbackend.beans.partner;
 
 
 import dev.abhinavvuppala.quotingbackend.beans.partner.dto.partnerDTO;
-import dev.abhinavvuppala.quotingbackend.beans.product.ProductEntity;
+import dev.abhinavvuppala.quotingbackend.beans.product.productEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,7 +51,7 @@ public class PartnerEntity {
     private String updatedBy;
 
     @OneToMany(mappedBy ="partnerEntity", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-    private List<ProductEntity> productList;
+    private List<productEntity> productList;
 
     public PartnerEntity(String partnerName, String partnerEmail, String shippingAddress, String billingAddress, boolean isSeller, String createdBy) {
         this.partnerName = partnerName;

@@ -1,7 +1,7 @@
 package dev.abhinavvuppala.quotingbackend.beans.product.dto;
 
 
-import dev.abhinavvuppala.quotingbackend.beans.product.ProductEntity;
+import dev.abhinavvuppala.quotingbackend.beans.product.productEntity;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -19,7 +19,7 @@ public class productMetadataDTO {
 
     private String updatedBy;
 
-    public productMetadataDTO(ProductEntity productEntity){
+    public productMetadataDTO(productEntity productEntity){
         this.createdAt = productEntity.getCreatedAt();
         this.updatedAt = productEntity.getUpdatedAt();
         this.createdBy = productEntity.getCreatedBy();

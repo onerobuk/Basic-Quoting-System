@@ -1,7 +1,7 @@
 package dev.abhinavvuppala.quotingbackend.beans.quoteLine.dto;
 
 import dev.abhinavvuppala.quotingbackend.beans.product.dto.productDTO;
-import dev.abhinavvuppala.quotingbackend.beans.quoteLine.quoteLineEntity;
+import dev.abhinavvuppala.quotingbackend.beans.quoteLine.quotelineEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class quotelineDTO {
     private double price;
     private String currencyCode;
 
-    public quotelineDTO(quoteLineEntity entity){
+    public quotelineDTO(quotelineEntity entity){
         this.id = entity.getQuoteLineId();
         this.revisionId = entity.getQuoteRevision().getRevisionId();
         this.productDTO = new productDTO(entity.getProduct());

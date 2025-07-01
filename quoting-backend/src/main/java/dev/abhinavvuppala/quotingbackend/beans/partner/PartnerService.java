@@ -1,7 +1,7 @@
 package dev.abhinavvuppala.quotingbackend.beans.partner;
 
 import dev.abhinavvuppala.quotingbackend.beans.partner.dto.partnerDTO;
-import dev.abhinavvuppala.quotingbackend.beans.product.ProductEntity;
+import dev.abhinavvuppala.quotingbackend.beans.product.productEntity;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class PartnerService {
     }
 
     @Transactional
-    public List<ProductEntity> getProducts(int id){
+    public List<productEntity> getProducts(int id){
         PartnerEntity partner = getPartnerById(id);
         return partner.getProductList();
     }

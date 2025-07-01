@@ -1,7 +1,7 @@
 package dev.abhinavvuppala.quotingbackend.beans.product.dto;
 
 import dev.abhinavvuppala.quotingbackend.beans.partner.dto.sellerDTO;
-import dev.abhinavvuppala.quotingbackend.beans.product.ProductEntity;
+import dev.abhinavvuppala.quotingbackend.beans.product.productEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class productDTO {
     private sellerDTO seller;
     private String currencyCode;
 
-    public productDTO(ProductEntity product){
+    public productDTO(productEntity product){
         this.id= product.getProductId();
         this.name = product.getProductName();
         this.price = product.getProductPrice();

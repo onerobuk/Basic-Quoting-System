@@ -1,8 +1,9 @@
 package dev.abhinavvuppala.quotingbackend.beans.quoteLine;
 
-import dev.abhinavvuppala.quotingbackend.beans.product.ProductEntity;
+import dev.abhinavvuppala.quotingbackend.beans.product.productEntity;
 import dev.abhinavvuppala.quotingbackend.beans.quoteLine.dto.quotelineDTO;
 import dev.abhinavvuppala.quotingbackend.beans.quoteRevision.quoteRevisionEntity;
+import dev.abhinavvuppala.quotingbackend.util.Currency;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.time.ZoneOffset;
 @Table(name = "quote_line_revision")
 @Data
 @NoArgsConstructor
-public class quoteLineEntity {
+public class quotelineEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,7 @@ public class quoteLineEntity {
 
     @OneToOne
     @JoinColumn(name = "product_id",referencedColumnName = "product_id")
-    private ProductEntity product;
+    private productEntity product;
 
     @Column(name = "quantity")
     private int quantity;
@@ -50,13 +51,13 @@ public class quoteLineEntity {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    public static quoteLineEntity fromDTO(quotelineRequest request,quoteRevisionEntity revision,ProductEntity product){
+    public static quotelineEntity fromDTO(quotelineRequest request, quoteRevisionEntity revision, productEntity product){
         quotelineDTO DTO = request.getEntity();
-        quoteLineEntity entity = new quoteLineEntity();
+        quotelineEntity entity = new quotelineEntity();
         entity.quoteRevision = revision;
         entity.product = product;
         entity.quantity = DTO.getQuantity();
-        entity.price = DTO.getPrice();
+        entity.price = Currency.valueOf(product.getProductCurrency()).getUSDrate() * DTO.getQuantity();
         entity.currencyCode = DTO.getCurrencyCode();
         entity.createdBy=entity.updatedBy=request.getUsername();
         return entity;

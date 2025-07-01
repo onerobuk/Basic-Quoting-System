@@ -4,6 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum Currency {
+    // 1 USD = x Currency
+    // 1/x USD = 1 Currency
     USD(1.00),
     GBP(1.37),
     EUR(1.17),
