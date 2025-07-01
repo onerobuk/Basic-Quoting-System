@@ -21,6 +21,9 @@ public class quoteDTO {
         this.quoteID=entity.getQuoteId();
         this.buyer=new partnerDTO(entity.getBuyer());
         this.revisions=entity.getQuoteRevisionList().stream().map(revisionDTO::new).toList();
+        this.status=entity.getStatus();
+        this.totalCost=entity.getTotalCost();
+        this.expirationDate=entity.getExpirationDate();
     }
 
 
