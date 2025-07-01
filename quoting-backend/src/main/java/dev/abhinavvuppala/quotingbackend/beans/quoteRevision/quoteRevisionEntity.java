@@ -28,7 +28,7 @@ public class quoteRevisionEntity {
     private quoteFinalEntity quoteEntity;
 
     @Column(name = "revision_no")
-    private int revisionNumber = 1;
+    private int revisionNumber;
 
     @Column(name = "notes",length = 100)
     private String notes;

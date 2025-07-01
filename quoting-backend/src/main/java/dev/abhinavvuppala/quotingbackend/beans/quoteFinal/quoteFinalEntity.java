@@ -25,10 +25,6 @@ public class quoteFinalEntity {
     @OneToOne
     private PartnerEntity buyer;
 
-    @OneToOne
-    @JoinColumn(name = "current_revision",referencedColumnName = "revision_id")
-    private quoteRevisionEntity currentRevision;
-
     @OneToMany(mappedBy = "quoteEntity",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<quoteRevisionEntity> quoteRevisionList;
 
