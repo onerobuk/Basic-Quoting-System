@@ -1,6 +1,6 @@
 package dev.abhinavvuppala.quotingbackend.beans.product;
 
-import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerEntity;
+import dev.abhinavvuppala.quotingbackend.beans.partner.partnerEntity;
 import dev.abhinavvuppala.quotingbackend.beans.product.dto.productDTO;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -31,7 +31,7 @@ public class productEntity {
 
     @ManyToOne
     @JoinColumn(name = "seller_id",referencedColumnName = "partner_id")
-    private PartnerEntity partnerEntity;
+    private partnerEntity partnerEntity;
 
     @Column(name = "created_at")
     private OffsetDateTime createdAt = OffsetDateTime.now(ZoneOffset.UTC);
@@ -45,7 +45,7 @@ public class productEntity {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    public static productEntity fromDTO(productRequest request, PartnerEntity partner){
+    public static productEntity fromDTO(productRequest request, partnerEntity partner){
         productDTO productDTO = request.getEntity();
         productEntity product = new productEntity();
         product.productName = productDTO.getName();

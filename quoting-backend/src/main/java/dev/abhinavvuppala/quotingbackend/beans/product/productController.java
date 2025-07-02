@@ -1,7 +1,7 @@
 package dev.abhinavvuppala.quotingbackend.beans.product;
 
-import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerEntity;
-import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerService;
+import dev.abhinavvuppala.quotingbackend.beans.partner.partnerEntity;
+import dev.abhinavvuppala.quotingbackend.beans.partner.partnerService;
 import dev.abhinavvuppala.quotingbackend.beans.product.dto.productDTO;
 import dev.abhinavvuppala.quotingbackend.beans.product.dto.productMetadataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 @RequestMapping("/products")
 public class productController {
     private final productService productService;
-    private final PartnerService partnerService;
+    private final partnerService partnerService;
 
     @Autowired
-    public productController(productService service, PartnerService partnerService) {
+    public productController(productService service, partnerService partnerService) {
         this.productService = service;
         this.partnerService = partnerService;
     }
@@ -43,7 +43,7 @@ public class productController {
 
     @PostMapping
     public ResponseEntity<Void> createProduct(@RequestBody productRequest productRequest){
-        PartnerEntity partner = partnerService.getPartnerById(productRequest.getEntity().getSeller().getId());
+        partnerEntity partner = partnerService.getPartnerById(productRequest.getEntity().getSeller().getId());
         productEntity productEntity = dev.abhinavvuppala.quotingbackend.beans.product.productEntity.fromDTO(productRequest,partner);
         productService.createProduct(productEntity,partner);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();

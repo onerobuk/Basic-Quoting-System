@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name="partner")
 @Data
 @NoArgsConstructor
-public class PartnerEntity {
+public class partnerEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -53,7 +53,7 @@ public class PartnerEntity {
     @OneToMany(mappedBy ="partnerEntity", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<productEntity> productList;
 
-    public PartnerEntity(String partnerName, String partnerEmail, String shippingAddress, String billingAddress, boolean isSeller, String createdBy) {
+    public partnerEntity(String partnerName, String partnerEmail, String shippingAddress, String billingAddress, boolean isSeller, String createdBy) {
         this.partnerName = partnerName;
         this.partnerEmail = partnerEmail;
         this.shippingAddress = shippingAddress;
@@ -63,7 +63,7 @@ public class PartnerEntity {
         this.updatedBy = createdBy;
     }
 
-    public PartnerEntity(partnerDTO partnerDTO,String createdBy) {
+    public partnerEntity(partnerDTO partnerDTO, String createdBy) {
         this.partnerName = partnerDTO.getPartnerName();
         this.partnerEmail = partnerDTO.getPartnerEmail();
         this.shippingAddress = partnerDTO.getShippingAddress();

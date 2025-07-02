@@ -1,6 +1,6 @@
 package dev.abhinavvuppala.quotingbackend.beans.quoteFinal;
 
-import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerEntity;
+import dev.abhinavvuppala.quotingbackend.beans.partner.partnerEntity;
 import dev.abhinavvuppala.quotingbackend.beans.quoteRevision.quoteRevisionEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class quoteFinalEntity {
 
     @JoinColumn(name = "buyer_id")
     @OneToOne
-    private PartnerEntity buyer;
+    private partnerEntity buyer;
 
     @OneToMany(mappedBy = "quoteEntity",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<quoteRevisionEntity> quoteRevisionList;

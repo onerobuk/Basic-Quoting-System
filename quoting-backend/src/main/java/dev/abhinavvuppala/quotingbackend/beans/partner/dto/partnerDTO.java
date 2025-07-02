@@ -1,6 +1,6 @@
 package dev.abhinavvuppala.quotingbackend.beans.partner.dto;
 
-import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerEntity;
+import dev.abhinavvuppala.quotingbackend.beans.partner.partnerEntity;
 
 import lombok.*;
 
@@ -15,7 +15,7 @@ public class partnerDTO {
     private String billingAddress;
     private boolean isSeller;
 
-    public partnerDTO(PartnerEntity partnerEntity){
+    public partnerDTO(partnerEntity partnerEntity){
         this.partnerId = partnerEntity.getPartnerId();
         this.partnerName = partnerEntity.getPartnerName();
         this.partnerEmail = partnerEntity.getPartnerEmail();

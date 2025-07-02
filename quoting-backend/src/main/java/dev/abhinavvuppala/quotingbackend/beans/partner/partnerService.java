@@ -12,26 +12,26 @@ import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
-public class PartnerService {
+public class partnerService {
 
-    private final PartnerRepository repository;
+    private final partnerRepository repository;
 
     @Autowired
-    public PartnerService(PartnerRepository repository) {
+    public partnerService(partnerRepository repository) {
         this.repository = repository;
     }
 
-    public List<PartnerEntity> getAllPartners(){
+    public List<partnerEntity> getAllPartners(){
         return repository.findAll();
     }
 
-    public PartnerEntity getPartnerById(int id) throws EntityNotFoundException{
+    public partnerEntity getPartnerById(int id) throws EntityNotFoundException{
         return repository.findById(id).orElseThrow(()->new EntityNotFoundException(String.format("Partner with id %d was not found",id)));
     }
 
     @Transactional
     public void updatePartner(partnerRequest partnerRequest,int id){
-        PartnerEntity partner = getPartnerById(id);
+        partnerEntity partner = getPartnerById(id);
         partnerDTO partnerDTO = partnerRequest.getEntity();
         partner.setPartnerName(partnerDTO.getPartnerName());
         partner.setPartnerEmail(partnerDTO.getPartnerEmail());
@@ -44,13 +44,13 @@ public class PartnerService {
 
     @Transactional
     public List<productEntity> getProducts(int id){
-        PartnerEntity partner = getPartnerById(id);
+        partnerEntity partner = getPartnerById(id);
         return partner.getProductList();
     }
 
     @Transactional
     public void createPartner(partnerRequest partnerRequest){
-        PartnerEntity newPartnerEntity = new PartnerEntity(partnerRequest.getEntity(),partnerRequest.getUsername());
+        partnerEntity newPartnerEntity = new partnerEntity(partnerRequest.getEntity(),partnerRequest.getUsername());
         repository.save(newPartnerEntity);
     }
 

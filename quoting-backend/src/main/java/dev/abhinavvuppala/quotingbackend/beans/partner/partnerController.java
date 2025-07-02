@@ -14,11 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/partners")
-public class PartnerController {
-    private final PartnerService worker;
+public class partnerController {
+    private final partnerService worker;
 
     @Autowired
-    public PartnerController(PartnerService worker){
+    public partnerController(partnerService worker){
         this.worker = worker;
     }
 

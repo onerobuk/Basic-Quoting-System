@@ -1,6 +1,6 @@
 package dev.abhinavvuppala.quotingbackend.beans.product;
 
-import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerEntity;
+import dev.abhinavvuppala.quotingbackend.beans.partner.partnerEntity;
 import dev.abhinavvuppala.quotingbackend.beans.product.dto.productDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -25,7 +25,7 @@ public class productService {
     }
 
     @Transactional
-    public void createProduct(productEntity product, PartnerEntity partner){
+    public void createProduct(productEntity product, partnerEntity partner){
         partner.getProductList().add(product);
         productRepo.save(product);
     }

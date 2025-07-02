@@ -1,7 +1,7 @@
 package dev.abhinavvuppala.quotingbackend.beans.partner.dto;
 
 
-import dev.abhinavvuppala.quotingbackend.beans.partner.PartnerEntity;
+import dev.abhinavvuppala.quotingbackend.beans.partner.partnerEntity;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -19,7 +19,7 @@ public class partnerMetadataDTO {
 
     private String updatedBy;
 
-    public partnerMetadataDTO(PartnerEntity partnerEntity){
+    public partnerMetadataDTO(partnerEntity partnerEntity){
         this.createdAt = partnerEntity.getCreatedAt();
         this.updatedAt = partnerEntity.getUpdatedAt();
         this.createdBy = partnerEntity.getCreatedBy();
