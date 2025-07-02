@@ -2,6 +2,7 @@
 <project version="4">
   <component name="WorkspaceSettings">
     <project name="quote-backend" path="$PROJECT_DIR$/quoting-backend" />
+    <project name="frontend" path="$PROJECT_DIR$/frontend" />
     <option name="workspace" value="true" />
   </component>
 </project>
