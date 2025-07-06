@@ -33,6 +33,9 @@ public class quoteRevisionEntity {
     @Column(name = "notes",length = 100)
     private String notes;
 
+    @Column(name = "total_cost")
+    private double totalCost;
+
     @OneToMany(mappedBy ="quoteRevision", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<quotelineEntity> quoteLines;
 
@@ -52,9 +55,11 @@ public class quoteRevisionEntity {
         revisionDTO dto = request.getEntity();
         quoteRevisionEntity entity = new quoteRevisionEntity();
         entity.quoteEntity=quoteEntity;
+        entity.revisionNumber = quoteEntity.getQuoteRevisionList().size()+1;
         entity.notes=dto.getNotes();
         entity.quoteLines = new ArrayList<>();
         entity.createdBy=entity.updatedBy=request.getUsername();
+        quoteEntity.getQuoteRevisionList().add(entity);
         return entity;
     }
 }

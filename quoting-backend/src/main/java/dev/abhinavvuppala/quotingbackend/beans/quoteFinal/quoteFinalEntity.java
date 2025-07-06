@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,9 +32,6 @@ public class quoteFinalEntity {
     @Column(name = "status",length = 50)
     private String status;
 
-    @Column(name = "total_cost")
-    private double totalCost;
-
     @Column(name = "expiration_date")
     private OffsetDateTime expirationDate = OffsetDateTime.now(ZoneOffset.UTC).plusWeeks(1);
 
@@ -48,4 +46,13 @@ public class quoteFinalEntity {
 
     @Column(name = "updated_by")
     private String updatedBy;
+
+    public static quoteFinalEntity createQuote(String username,partnerEntity buyer){
+        quoteFinalEntity entity = new quoteFinalEntity();
+        entity.buyer=buyer;
+        entity.quoteRevisionList = new ArrayList<>();
+        entity.status = Statuses.CREATED.getStatusMessage();
+        entity.createdBy = entity.updatedBy = username;
+        return entity;
+    }
 }

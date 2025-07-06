@@ -43,7 +43,7 @@ public class productController {
 
     @PostMapping
     public ResponseEntity<Void> createProduct(@RequestBody productRequest productRequest){
-        partnerEntity partner = partnerService.getPartnerById(productRequest.getEntity().getSeller().getId());
+        partnerEntity partner = partnerService.getPartnerById(productRequest.getEntity().getSellerId());
         productEntity productEntity = dev.abhinavvuppala.quotingbackend.beans.product.productEntity.fromDTO(productRequest,partner);
         productService.createProduct(productEntity,partner);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();

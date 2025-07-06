@@ -45,7 +45,7 @@ public class quotelineService {
     public void createQuoteline(quotelineRequest request){
         quoteRevisionEntity revision = revisionService.getRevisionById(request.getEntity().getRevisionId());
         productEntity product = productService.getProductById(request.getEntity().getProductDTO().getId());
-        quotelineEntity entity = quotelineEntity.fromDTO(request, revision, product);
+        quotelineEntity entity = quotelineEntity.fromDTO(request.getEntity(),request.getUsername(), revision, product);
         revision.getQuoteLines().add(entity);
         repository.save(entity);
     }

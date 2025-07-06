@@ -51,15 +51,14 @@ public class quotelineEntity {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    public static quotelineEntity fromDTO(quotelineRequest request, quoteRevisionEntity revision, productEntity product){
-        quotelineDTO DTO = request.getEntity();
+    public static quotelineEntity fromDTO(quotelineDTO dto,String username, quoteRevisionEntity revision, productEntity product){
         quotelineEntity entity = new quotelineEntity();
         entity.quoteRevision = revision;
         entity.product = product;
-        entity.quantity = DTO.getQuantity();
-        entity.price = Currency.valueOf(product.getProductCurrency()).getUSDrate() * DTO.getQuantity();
-        entity.currencyCode = DTO.getCurrencyCode();
-        entity.createdBy=entity.updatedBy=request.getUsername();
+        entity.quantity = dto.getQuantity();
+        entity.price = Currency.valueOf(product.getProductCurrency()).getUSDrate() * dto.getQuantity();
+        entity.currencyCode = dto.getCurrencyCode();
+        entity.createdBy=entity.updatedBy=username;
         return entity;
     }
 }

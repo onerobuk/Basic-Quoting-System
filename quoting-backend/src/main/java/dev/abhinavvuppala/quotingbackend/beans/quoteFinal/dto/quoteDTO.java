@@ -11,18 +11,16 @@ import java.util.List;
 @Data
 public class quoteDTO {
     private int quoteID;
-    private partnerDTO buyer;
+    private int buyerId;
     private List<revisionDTO> revisions;
     private String status;
-    private double totalCost;
     private OffsetDateTime expirationDate;
 
     public quoteDTO(quoteFinalEntity entity){
         this.quoteID=entity.getQuoteId();
-        this.buyer=new partnerDTO(entity.getBuyer());
+        this.buyerId=entity.getBuyer().getPartnerId();
         this.revisions=entity.getQuoteRevisionList().stream().map(revisionDTO::new).toList();
         this.status=entity.getStatus();
-        this.totalCost=entity.getTotalCost();
         this.expirationDate=entity.getExpirationDate();
     }
 
