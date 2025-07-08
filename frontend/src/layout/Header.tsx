@@ -19,8 +19,8 @@ const Header = () =>{
         );
     }
     return(
-        <NavigationMenu.Root className="max-w-min p-2 rounded-md bg-gray-700 text-gray-700 justify-items-center">
-            <NavigationMenu.List className="relative flex justify-items-center align-center bg-gray-700">
+        <NavigationMenu.Root className="max-w-min px-0.5 py-1 rounded-md bg-white text-gray-700 justify-items-center">
+            <NavigationMenu.List className="relative flex justify-items-center align-center bg-white">
                 <NavigationMenu.Item>
                     <Link className={triggerClasses}
                     href="https://google.com">Google</Link>
