@@ -9,7 +9,7 @@ type layoutProps = {
 const Layout = ({children}: layoutProps) => {
     return (
             <div className="root ">
-                <div className="bg-neutral-900 justify-items-center w-full h-fit border-b-2 border-b-amber-50 p-1 ">
+                <div className="bg-neutral-800 justify-items-center w-full h-fit border-b-2 border-b-amber-50 p-2 ">
                     <Header/>
                 </div>
                 {children}

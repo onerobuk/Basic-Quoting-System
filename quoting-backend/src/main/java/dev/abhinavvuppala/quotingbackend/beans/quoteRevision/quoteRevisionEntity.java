@@ -33,9 +33,6 @@ public class quoteRevisionEntity {
     @Column(name = "notes",length = 100)
     private String notes;
 
-    @Column(name = "total_cost")
-    private double totalCost;
-
     @OneToMany(mappedBy ="quoteRevision", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<quotelineEntity> quoteLines;
 
