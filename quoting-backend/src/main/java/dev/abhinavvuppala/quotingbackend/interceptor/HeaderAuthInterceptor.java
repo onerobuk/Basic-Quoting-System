@@ -14,6 +14,9 @@ public class HeaderAuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
         String requestHeader = request.getHeader("Frontend-Key");
         System.out.println("header check");
+        if (request.getMethod().equalsIgnoreCase("OPTIONS")){
+            return true;
+        }
         if(requestHeader!=null){
             if(!requestHeader.equals(FRONTEND_KEY)) {
                 unauthorizedAccessException.accessDeniedReasons errorInvalidHeaders = unauthorizedAccessException.accessDeniedReasons.INCORRECT_KEY;
