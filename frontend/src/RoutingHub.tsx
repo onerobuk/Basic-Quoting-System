@@ -1,9 +1,10 @@
 import {Routes, Route, BrowserRouter} from "react-router-dom";
-import PartnerGrid from "./PartnerGrid.tsx";
+import PartnerGrid from "./pages/resources/PartnerGrid.tsx";
 import Home from "./pages/home/Home.tsx";
 import Layout from "./layout/Layout.tsx";
 import {useState} from "react";
-import ProductGrid from "./ProductGrid.tsx";
+import ProductGrid from "./pages/resources/ProductGrid.tsx";
+import PartnerForm from "./pages/register/PartnerForm.tsx";
 
 const App = () => {
     const [currentPageName,setCurrentPageName] = useState("Home");
@@ -15,6 +16,7 @@ const App = () => {
                     <Route path="/" element={<Home setHeaderTitle={setCurrentPageName}/>}/>
                     <Route path="/resources/products" element={<ProductGrid setHeader={setCurrentPageName} />} />
                     <Route path="/resources/partners" element={<PartnerGrid setHeader={setCurrentPageName}/>}/>
+                    <Route path='/register/partner' element={<PartnerForm updateHeader={setCurrentPageName}/>} />
                 </Routes>
             </Layout>
         </BrowserRouter>

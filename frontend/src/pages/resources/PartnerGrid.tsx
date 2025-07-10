@@ -6,25 +6,23 @@ import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-interface product {
+interface partner {
     id:number,
-    name: string,
-    price:number,
-    sellerId:number,
-    currencyCode:string,
+    name:string,
+    isSeller:boolean
 }
 
 interface partnerGridProps{
     setHeader:Dispatch<SetStateAction<string>>;
 }
 
-const ProductGrid= ({setHeader}:partnerGridProps) => {
-    const [products,setProducts] = useState<product[]>([]);
+const PartnerGrid= ({setHeader}:partnerGridProps) => {
+    const [partners,setPartners] = useState<partner[]>([]);
     const [isLoading,setIsLoading] = useState(true);
 
-    async function getProducts(){
+    async function getPartners(){
         try{
-            const response = await fetch('http://localhost:8080/products/',{
+            const response = await fetch('http://localhost:8080/partners',{
                 method:'GET',
                 headers: {
                     'Frontend-Key':'tricephalos'
@@ -33,28 +31,29 @@ const ProductGrid= ({setHeader}:partnerGridProps) => {
             if(!response.ok){
                 throw new Error(`HTTP ERROR: ${response.status}`)
             }
+            console.log("Partner GET request success");
             const data = await response.json();
-            const newProducts:product[] = data.map((item:product)=>({
-                id: Number(item.id),
-                name: String(item.name),
-                price: String(item.price),
-                sellerId: String(item.sellerId),
-                currencyCode: String(item.currencyCode),
-            }))
-            setProducts(newProducts)
+            const newPartners:partner[] = data.map((item)=>{
+                console.log(item);
+                return {
+                id: item.id,
+                name: item.name,
+                isSeller: item.seller
+                };
+        });
+            console.log(newPartners);
+            setPartners(newPartners)
         } catch (error){
-            console.error('Product Fetch error: ',error);
+            console.error('Partner Fetch error: ',error);
         } finally {
             setIsLoading(false);
         }
     }
 
-    const colDefs: ColDef<product>[] = [
+    const colDefs: ColDef<partner>[] = [
         {field: "id"},
         {field: "name"},
-        {field: "price"},
-        {field: "sellerId"},
-        {field: "currencyCode"}
+        {field: "isSeller"}
     ]
 
     const defaultColDef: ColDef = {
@@ -62,10 +61,10 @@ const ProductGrid= ({setHeader}:partnerGridProps) => {
     }
 
     useEffect(() => {
-        setHeader("All Products");
-        document.title = "Products";
-        getProducts();
-    }, [])
+        setHeader("All Partners");
+        document.title = "Partners";
+        getPartners();
+    }, [setHeader])
 
     if(isLoading) {
         return(
@@ -73,10 +72,10 @@ const ProductGrid= ({setHeader}:partnerGridProps) => {
             <p className=" text-white pt-64 font-bold">Loading...</p>
         </div>)
     }
-    else if (products.length==0){
+    else if (partners.length==0){
         return(
             <div className="flex h-dvh w-full bg-neutral-600 justify-center">
-                <p className=" text-white pt-64 font-bold">No Products Found</p>
+                <p className=" text-white pt-64 font-bold">No Partners Found</p>
             </div>
         )
 
@@ -87,7 +86,7 @@ const ProductGrid= ({setHeader}:partnerGridProps) => {
             <div style={{width: "50%", height: "50%"}}>
                 <AgGridReact
                     theme={themeQuartz}
-                    rowData={products}
+                    rowData={partners}
                     columnDefs={colDefs}
                     defaultColDef={defaultColDef}
                 />
@@ -96,4 +95,4 @@ const ProductGrid= ({setHeader}:partnerGridProps) => {
     )
 }
 
-export default ProductGrid;
+export default PartnerGrid

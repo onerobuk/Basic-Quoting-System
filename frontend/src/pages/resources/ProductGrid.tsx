@@ -6,26 +6,25 @@ import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-interface partner {
-    partnerId:number,
-    partnerName: string,
-    partnerEmail:string,
-    shippingAddress:string,
-    billingAddress:string,
-    isSeller:boolean;
+interface product {
+    id:number,
+    name: string,
+    price:number,
+    sellerId:number,
+    currencyCode:string,
 }
 
 interface partnerGridProps{
     setHeader:Dispatch<SetStateAction<string>>;
 }
 
-const PartnerGrid= ({setHeader}:partnerGridProps) => {
-    const [partners,setPartners] = useState<partner[]>([]);
+const ProductGrid= ({setHeader}:partnerGridProps) => {
+    const [products,setProducts] = useState<product[]>([]);
     const [isLoading,setIsLoading] = useState(true);
 
-    async function getPartners(){
+    async function getProducts(){
         try{
-            const response = await fetch('http://localhost:8080/partners',{
+            const response = await fetch('http://localhost:8080/products/',{
                 method:'GET',
                 headers: {
                     'Frontend-Key':'tricephalos'
@@ -34,28 +33,29 @@ const PartnerGrid= ({setHeader}:partnerGridProps) => {
             if(!response.ok){
                 throw new Error(`HTTP ERROR: ${response.status}`)
             }
+            console.log("Product GET request success");
             const data = await response.json();
-            const newPartners:partner[] = data.map((item:partner)=>({
-                partnerId: Number(item.partnerId),
-                partnerName: String(item.partnerName),
-                partnerEmail: String(item.partnerEmail),
-                shippingAddress: String(item.shippingAddress),
-                billingAddress: String(item.billingAddress),
-                isSeller: Boolean(item.isSeller)
+            const newProducts:product[] = data.map((item:product)=>({
+                id: Number(item.id),
+                name: String(item.name),
+                price: String(item.price),
+                sellerId: String(item.sellerId),
+                currencyCode: String(item.currencyCode),
             }))
-            setPartners(newPartners)
+            setProducts(newProducts)
         } catch (error){
-            console.error('Partner Fetch error: ',error);
+            console.error('Product Fetch error: ',error);
         } finally {
             setIsLoading(false);
         }
     }
 
-    const colDefs: ColDef<partner>[] = [
-        {field: "partnerId"},
-        {field: "partnerName"},
-        {field: "partnerEmail"},
-        {field: "isSeller"}
+    const colDefs: ColDef<product>[] = [
+        {field: "id"},
+        {field: "name"},
+        {field: "price"},
+        {field: "sellerId"},
+        {field: "currencyCode"}
     ]
 
     const defaultColDef: ColDef = {
@@ -63,10 +63,10 @@ const PartnerGrid= ({setHeader}:partnerGridProps) => {
     }
 
     useEffect(() => {
-        setHeader("All Partners");
-        document.title = "Partners";
-        getPartners();
-    }, [])
+        setHeader("All Products");
+        document.title = "Products";
+        getProducts();
+    }, [setHeader])
 
     if(isLoading) {
         return(
@@ -74,10 +74,10 @@ const PartnerGrid= ({setHeader}:partnerGridProps) => {
             <p className=" text-white pt-64 font-bold">Loading...</p>
         </div>)
     }
-    else if (partners.length==0){
+    else if (products.length==0){
         return(
             <div className="flex h-dvh w-full bg-neutral-600 justify-center">
-                <p className=" text-white pt-64 font-bold">No Partners Found</p>
+                <p className=" text-white pt-64 font-bold">No Products Found</p>
             </div>
         )
 
@@ -88,7 +88,7 @@ const PartnerGrid= ({setHeader}:partnerGridProps) => {
             <div style={{width: "50%", height: "50%"}}>
                 <AgGridReact
                     theme={themeQuartz}
-                    rowData={partners}
+                    rowData={products}
                     columnDefs={colDefs}
                     defaultColDef={defaultColDef}
                 />
@@ -97,4 +97,4 @@ const PartnerGrid= ({setHeader}:partnerGridProps) => {
     )
 }
 
-export default PartnerGrid
+export default ProductGrid;
