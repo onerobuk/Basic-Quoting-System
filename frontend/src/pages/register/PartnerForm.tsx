@@ -1,22 +1,19 @@
-import {type Dispatch, type SetStateAction, useEffect} from "react";
+import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import type {SubmitHandler} from "react-hook-form";
+import SuccessPage from "./SuccessPage.tsx";
 
 interface partnerFormProps{
     updateHeader:Dispatch<SetStateAction<string>>
 }
 
-enum formBool{
-    'yes'=true,
-    'no' = false
-}
 
 interface partnerFormI {
     partnerName:string,
     partnerEmail:string,
     shippingAddress:string,
     billingAddress:string,
-    isSeller:formBool
+    isSeller:string
 }
 
 interface partnerDTO{
@@ -25,7 +22,7 @@ interface partnerDTO{
     partnerEmail:string,
     shippingAddress:string,
     billingAddress:string,
-    isSeller:formBool
+    isSeller:boolean
 }
 
 interface partnerReq{
@@ -34,6 +31,8 @@ interface partnerReq{
 }
 
 const PartnerForm = ({updateHeader}:partnerFormProps) =>{
+    const [submitted,setSubmitted] = useState(false);
+
     useEffect(()=>{
         updateHeader('Register New Partner');
     },[updateHeader])
@@ -44,13 +43,17 @@ const PartnerForm = ({updateHeader}:partnerFormProps) =>{
     const {register,handleSubmit,formState:{errors}} = useForm<partnerFormI>();
     const onSubmit: SubmitHandler<partnerFormI> = async (data:partnerFormI)=> {
         const dto:partnerDTO = {
-            partnerId:null,
-            ...data
+            partnerId:0,
+            ...data,
+            isSeller:(data.isSeller==='Yes'),
+
         }
+        console.log(dto);
         const request:partnerReq = {
             entity:dto,
             username:'test'
         }
+        setSubmitted(true);
         try{
             const response = await fetch('http://localhost:8080/partners',{
                 method:'POST',
@@ -63,11 +66,21 @@ const PartnerForm = ({updateHeader}:partnerFormProps) =>{
             if(!response.ok){
                 throw new Error(`HTTP ERROR: ${response.status}`)
             }
-            console.log('POST successful: ',result);
+            console.log('POST successful: ',response);
         } catch (error){
             console.error('Partner POST error: ',error);
+        } finally {
+            setSubmitted(true);
         }
     };
+
+    if(submitted){
+        return (
+            <div className={'bg-neutral-600 text-white flex justify-items-center w-full h-screen pt-3 justify-center justify-self-center'}>
+                <SuccessPage redirectDelay={100000} redirectTarget={'/'} message={'New Partner Successfully Added'}/>
+            </div>)
+    }
+
     return(
         <div className='bg-neutral-600 text-white justify-items-center w-full h-screen pt-1'>
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 justify-center p-3">
@@ -75,7 +88,7 @@ const PartnerForm = ({updateHeader}:partnerFormProps) =>{
                 <input placeholder='Email' className={inputClasses+(errors.partnerEmail?errorClasses:' text-white')}{...register("partnerEmail", {required: true, maxLength: 50})}/>
                 <input placeholder='Billing Address' className={inputClasses+(errors.billingAddress?errorClasses:' text-white')}{...register("billingAddress", {required: true, maxLength: 50})}/>
                 <input placeholder='Shipping Address' className={'pb-2 '+inputClasses+(errors.shippingAddress?errorClasses:' text-white')} {...register("shippingAddress", {required: true, maxLength: 50})}/>
-                <label className={'text-center rounded-md'+(errors.partnerName?errorClasses:' text-white')}>Are you selling products?</label>
+                <label className={'text-center rounded-md mt-1'+(errors.partnerName?' text-red-500':' text-white')}>Are you selling products?</label>
                 <div className='p-2 justify-center grid grid-cols-4'>
                     <label className='text-right'>Yes</label>
                     <input {...register("isSeller", {required: true})} type="radio" value="Yes"/>

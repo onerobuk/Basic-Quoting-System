@@ -3,7 +3,7 @@ import type {ColDef} from 'ag-grid-community'
 import {AllCommunityModule, ModuleRegistry, themeQuartz} from 'ag-grid-community'
 import {AgGridReact} from "ag-grid-react";
 import {type Dispatch, type ReactNode, type SetStateAction, useEffect, useState} from "react";
-import Popup from "../register/Popup.tsx";
+import Popup from "./Popup.tsx";
 import * as React from "react";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
