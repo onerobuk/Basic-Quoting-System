@@ -59,6 +59,9 @@ public class partnerService {
         repository.deleteById(id);
     }
 
+    @Transactional
+    public void deleteAllPartners(){repository.deleteAll();}
+
     public void flushPartnerEntity(){
         repository.flush();
     }

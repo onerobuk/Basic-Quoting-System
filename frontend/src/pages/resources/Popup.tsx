@@ -16,7 +16,7 @@ const Popup = ({buttonName,modalTitle,modalContent}:popupProps) =>{
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Backdrop className="fixed inset-0 bg-black opacity-20 transition-all duration-150 dark:opacity-70" />
-                <Dialog.Popup  className="fixed top-1/2 left-1/2 -mt-8 w-96 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-gray-50 p-6 text-gray-900  outline-1 transition-all duration-150">
+                <Dialog.Popup  className="fixed top-1/2 left-1/2 -mt-8 w-fit -translate-x-1/2 -translate-y-1/2 rounded-lg bg-gray-50 p-6 text-gray-900  outline-1 transition-all duration-150">
                     <Dialog.Title className='font-bold text-black text-xl'>
                         {modalTitle}
                     </Dialog.Title>

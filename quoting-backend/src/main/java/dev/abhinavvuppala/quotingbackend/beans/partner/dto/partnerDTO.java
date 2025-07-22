@@ -1,5 +1,6 @@
 package dev.abhinavvuppala.quotingbackend.beans.partner.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.abhinavvuppala.quotingbackend.beans.partner.partnerEntity;
 
 import lombok.*;
@@ -13,6 +14,8 @@ public class partnerDTO {
     private String partnerEmail;
     private String shippingAddress;
     private String billingAddress;
+
+    @JsonProperty("isSeller")
     private boolean isSeller;
 
     public partnerDTO(partnerEntity partnerEntity){

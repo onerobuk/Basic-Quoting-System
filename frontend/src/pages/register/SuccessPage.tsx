@@ -15,12 +15,14 @@ const SuccessPage = ({redirectTarget,redirectDelay,message}:successPageProps) =>
         },redirectDelay)
 
         return()=>clearTimeout(timeout);
-    }, [navigate,redirectTarget,redirectDelay]);
+    }, [navigate, redirectDelay, redirectTarget]);
 
     return (
-        <div className='bg-neutral-600 text-white flex items-start w-full h-screen pt-3 justify-center justify-self-center'>
-            <label className='font-bold pt-50'>{message}</label><br/>
-            <label className='font-bold pt-50'>Redirecting...</label>
+        <div className='bg-neutral-600 text-white items-start w-full h-screen pt-3 grid grid-cols-1 place-items-center'>
+            <div className={'text-center pt-58'}>
+                <label className='font-bold text-xl'>{message}</label><br/>
+                <label className='font-bold text-xl'>Redirecting...</label>
+            </div>
         </div>
     )
 }

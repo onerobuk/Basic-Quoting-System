@@ -47,6 +47,7 @@ public class partnerController {
 
     @PostMapping
     public ResponseEntity<Void> createPartner(@RequestBody partnerRequest request){
+        System.out.println(request);
         worker.createPartner(request);
         return ResponseEntity.ok().build();
     }
@@ -60,6 +61,12 @@ public class partnerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePartner(@PathVariable int id){
         worker.deletePartnerById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAll(){
+        worker.deleteAllPartners();
         return ResponseEntity.ok().build();
     }
 

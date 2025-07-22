@@ -5,6 +5,7 @@ import Layout from "./layout/Layout.tsx";
 import {useState} from "react";
 import ProductGrid from "./pages/resources/ProductGrid.tsx";
 import PartnerForm from "./pages/register/PartnerForm.tsx";
+import ProductForm from "./pages/register/ProductForm.tsx";
 
 const App = () => {
     const [currentPageName,setCurrentPageName] = useState("Home");
@@ -17,6 +18,7 @@ const App = () => {
                     <Route path="/resources/products" element={<ProductGrid setHeader={setCurrentPageName} />} />
                     <Route path="/resources/partners" element={<PartnerGrid setHeader={setCurrentPageName}/>}/>
                     <Route path='/register/partner' element={<PartnerForm updateHeader={setCurrentPageName}/>} />
+                    <Route path='/register/product' element={<ProductForm updateHeader={setCurrentPageName}/>} />
                 </Routes>
             </Layout>
         </BrowserRouter>

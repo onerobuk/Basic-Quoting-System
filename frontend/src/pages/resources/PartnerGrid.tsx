@@ -2,8 +2,8 @@
 import type {ColDef} from 'ag-grid-community'
 import {AllCommunityModule, ModuleRegistry, themeQuartz} from 'ag-grid-community'
 import {AgGridReact} from "ag-grid-react";
-import {type Dispatch, type ReactNode, type SetStateAction, useEffect, useState} from "react";
-import Popup from "./Popup.tsx";
+import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
+import PopupCellRenderer from "./partnerPopupCellRenderer.tsx";
 import * as React from "react";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -14,83 +14,10 @@ interface partner {
     seller:boolean
 }
 
-interface fullPartner {
-    partnerId:number,
-    partnerName:string,
-    partnerEmail:string,
-    shippingAddress:string,
-    billingAddress:string,
-    seller:boolean
-}
-
 interface partnerGridProps{
     setHeader:Dispatch<SetStateAction<string>>;
 }
 
-const PopupCellRenderer = (props) =>{
-    const [isLoading,setIsLoading] = useState(true)
-    const [partner,setPartner] = useState([]);
-
-    useEffect(() => {
-        getPartnerById(props.value)
-    }, [props.value]);
-
-    if (!props.context?.gridReady) {
-        return null;
-    }
-    
-    async function getPartnerById(id:number){
-        
-        try{
-            const response = await fetch(`http://localhost:8080/partners/${id}`,{
-                method:'GET',
-                headers: {
-                    'Frontend-Key':'tricephalos'
-                }
-            })
-            if(!response.ok){
-                throw new Error(`HTTP ERROR: ${response.status}`)
-            }
-            const data = await response.json();
-            console.log(data);
-            const newPartner:fullPartner = {
-                partnerId:data.partnerId,
-                partnerName:data.partnerName,
-                partnerEmail:data.partnerEmail,
-                shippingAddress:data.shippingAddress,
-                billingAddress:data.billingAddress,
-                seller:data.seller
-            }
-            setPartner(newPartner);
-        } catch (error){
-            console.error('Partner Fetch error: ',error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
-    console.log('fullPartner');
-    console.log(partner.partnerEmail);
-
-    const partnerDesc:ReactNode =(
-        <span className='grid grid-cols-2'>
-            <label>Id: </label><label>{partner.partnerId}</label>
-            <label>Name: </label><label>{partner.partnerName}</label>
-            <label>Email: </label><label>{partner.partnerEmail}</label>
-            <label>Shipping Address: </label><label>{partner.shippingAddress}</label>
-            <label>Billing Address: </label><label>{partner.billingAddress}</label>
-            <label>Seller: </label><input className="justify-self-start mt-1.5 appearance-none w-4 h-4 border-2 rounded-md" checked={partner.seller} type='checkbox' disabled/>
-        </span>
-    )
-
-    return (
-        <Popup
-            buttonName={props.value}
-            modalTitle={isLoading?'':partner.partnerName}
-            modalContent={isLoading?<label>Loading...</label>:partnerDesc}
-        />
-    )
-}
 
 const PartnerGrid= ({setHeader}:partnerGridProps) => {
     const [partners,setPartners] = useState<partner[]>([]);
@@ -157,7 +84,7 @@ const PartnerGrid= ({setHeader}:partnerGridProps) => {
     else if (partners.length==0){
         return(
             <div className="flex h-dvh w-full bg-neutral-600 justify-center">
-                <p className=" text-white pt-64 font-bold">No Partners Found</p>
+                <p className=" text-white pt-58 font-bold text-xl">No Partners Found</p>
             </div>
         )
 

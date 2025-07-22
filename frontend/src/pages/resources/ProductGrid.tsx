@@ -3,6 +3,8 @@ import type {ColDef} from 'ag-grid-community'
 import {AllCommunityModule, ModuleRegistry, themeQuartz} from 'ag-grid-community'
 import {AgGridReact} from "ag-grid-react";
 import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
+import PopupCellRenderer from "./partnerPopupCellRenderer.tsx";
+import * as React from "react";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -14,17 +16,20 @@ interface product {
     currencyCode:string,
 }
 
-interface partnerGridProps{
+interface productGridProps {
     setHeader:Dispatch<SetStateAction<string>>;
 }
 
-const ProductGrid= ({setHeader}:partnerGridProps) => {
+
+const ProductGrid= ({setHeader}:productGridProps) => {
     const [products,setProducts] = useState<product[]>([]);
     const [isLoading,setIsLoading] = useState(true);
+    const [gridReady,setGridReady] = useState(false);
+
 
     async function getProducts(){
         try{
-            const response = await fetch('http://localhost:8080/products/',{
+            const response = await fetch('http://localhost:8080/products',{
                 method:'GET',
                 headers: {
                     'Frontend-Key':'tricephalos'
@@ -54,7 +59,10 @@ const ProductGrid= ({setHeader}:partnerGridProps) => {
         {field: "id"},
         {field: "name"},
         {field: "price"},
-        {field: "sellerId"},
+        {
+            field: "sellerId",
+            cellRenderer: PopupCellRenderer
+        },
         {field: "currencyCode"}
     ]
 
@@ -77,7 +85,7 @@ const ProductGrid= ({setHeader}:partnerGridProps) => {
     else if (products.length==0){
         return(
             <div className="flex h-dvh w-full bg-neutral-600 justify-center">
-                <p className=" text-white pt-64 font-bold">No Products Found</p>
+                <p className=" text-white pt-58 font-bold text-xl">No Products Found</p>
             </div>
         )
 
@@ -87,6 +95,8 @@ const ProductGrid= ({setHeader}:partnerGridProps) => {
         <div className="flex h-screen w-full items-center justify-center bg-neutral-600">
             <div style={{width: "50%", height: "50%"}}>
                 <AgGridReact
+                    onGridReady={()=>setGridReady(true)}
+                    context={{gridReady}}
                     theme={themeQuartz}
                     rowData={products}
                     columnDefs={colDefs}

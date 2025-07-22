@@ -13,7 +13,7 @@ interface partnerFormI {
     partnerEmail:string,
     shippingAddress:string,
     billingAddress:string,
-    isSeller:string
+    isSeller:boolean
 }
 
 interface partnerDTO{
@@ -45,14 +45,12 @@ const PartnerForm = ({updateHeader}:partnerFormProps) =>{
         const dto:partnerDTO = {
             partnerId:0,
             ...data,
-            isSeller:(data.isSeller==='Yes'),
-
         }
-        console.log(dto);
         const request:partnerReq = {
             entity:dto,
             username:'test'
         }
+        console.log("Outgoing request: ",request);
         setSubmitted(true);
         try{
             const response = await fetch('http://localhost:8080/partners',{
@@ -75,10 +73,8 @@ const PartnerForm = ({updateHeader}:partnerFormProps) =>{
     };
 
     if(submitted){
-        return (
-            <div className={'bg-neutral-600 text-white flex justify-items-center w-full h-screen pt-3 justify-center justify-self-center'}>
-                <SuccessPage redirectDelay={100000} redirectTarget={'/'} message={'New Partner Successfully Added'}/>
-            </div>)
+        return <SuccessPage redirectDelay={3000} redirectTarget={'/resources/partners'} message={'New Partner Successfully Added'}/>
+
     }
 
     return(
@@ -88,12 +84,9 @@ const PartnerForm = ({updateHeader}:partnerFormProps) =>{
                 <input placeholder='Email' className={inputClasses+(errors.partnerEmail?errorClasses:' text-white')}{...register("partnerEmail", {required: true, maxLength: 50})}/>
                 <input placeholder='Billing Address' className={inputClasses+(errors.billingAddress?errorClasses:' text-white')}{...register("billingAddress", {required: true, maxLength: 50})}/>
                 <input placeholder='Shipping Address' className={'pb-2 '+inputClasses+(errors.shippingAddress?errorClasses:' text-white')} {...register("shippingAddress", {required: true, maxLength: 50})}/>
-                <label className={'text-center rounded-md mt-1'+(errors.partnerName?' text-red-500':' text-white')}>Are you selling products?</label>
-                <div className='p-2 justify-center grid grid-cols-4'>
-                    <label className='text-right'>Yes</label>
-                    <input {...register("isSeller", {required: true})} type="radio" value="Yes"/>
-                    <label className='text-right'>No</label>
-                    <input {...register("isSeller", {required: true})} type="radio" value="No"/>
+                <div className='p-2 justify-center flex'>
+                    <label className='text-right mr-2 pb-1'>Seller: </label>
+                    <input type='checkbox' {...register("isSeller")}/>
                 </div>
                 <button type="submit" className='bg-neutral-800 p-1 border-black border-2 rounded-md hover:bg-neutral-700'>Submit</button>
             </form>
