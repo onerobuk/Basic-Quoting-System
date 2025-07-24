@@ -1,6 +1,7 @@
-import {type Dispatch, type SetStateAction, useEffect} from "react";
+import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import type {SubmitHandler} from "react-hook-form";
+import SuccessPage from "./SuccessPage.tsx";
 
 interface productFormProps {
     updateHeader:Dispatch<SetStateAction<string>>
@@ -27,6 +28,8 @@ interface productReq {
 }
 
 const ProductForm = ({updateHeader}:productFormProps) =>{
+    const [submitted,setSubmitted] = useState<boolean>(false);
+
     useEffect(()=>{
         updateHeader('Register New Product');
     },[updateHeader])
@@ -59,6 +62,8 @@ const ProductForm = ({updateHeader}:productFormProps) =>{
             console.log('POST successful: ',response);
         } catch (error){
             console.error('Partner POST error: ',error);
+        } finally {
+            setSubmitted(true);
         }
     };
 
@@ -79,6 +84,10 @@ const ProductForm = ({updateHeader}:productFormProps) =>{
             console.log('Seller validation error: ',error);
             return false;
         }
+    }
+
+    if(submitted){
+        return <SuccessPage redirectDelay={3000} redirectTarget={'/resources/products'} topMessage={'New Product Successfully Registered'} bottomMessage={'Redirecting...'}/>
     }
 
     return(

@@ -31,7 +31,7 @@ interface partnerReq{
 }
 
 const PartnerForm = ({updateHeader}:partnerFormProps) =>{
-    const [submitted,setSubmitted] = useState(false);
+    const [submitted,setSubmitted] = useState<boolean>(false);
 
     useEffect(()=>{
         updateHeader('Register New Partner');
@@ -51,7 +51,6 @@ const PartnerForm = ({updateHeader}:partnerFormProps) =>{
             username:'test'
         }
         console.log("Outgoing request: ",request);
-        setSubmitted(true);
         try{
             const response = await fetch('http://localhost:8080/partners',{
                 method:'POST',
@@ -73,8 +72,7 @@ const PartnerForm = ({updateHeader}:partnerFormProps) =>{
     };
 
     if(submitted){
-        return <SuccessPage redirectDelay={3000} redirectTarget={'/resources/partners'} message={'New Partner Successfully Added'}/>
-
+        return <SuccessPage redirectDelay={3000} redirectTarget={'/resources/partners'} topMessage={'New Partner Successfully Added'} bottomMessage={'Redirecting...'}/>
     }
 
     return(

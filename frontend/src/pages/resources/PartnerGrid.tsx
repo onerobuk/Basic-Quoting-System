@@ -5,6 +5,7 @@ import {AgGridReact} from "ag-grid-react";
 import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
 import PopupCellRenderer from "./partnerPopupCellRenderer.tsx";
 import * as React from "react";
+import Spinner from "../../Spinner.tsx";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -76,10 +77,7 @@ const PartnerGrid= ({setHeader}:partnerGridProps) => {
     }, [setHeader])
 
     if(isLoading) {
-        return(
-        <div className="flex h-dvh w-full bg-neutral-600 justify-center">
-            <p className=" text-white pt-64 font-bold">Loading...</p>
-        </div>)
+        return <Spinner topMessage={''} bottomMessage={'Loading...'}/>
     }
     else if (partners.length==0){
         return(
