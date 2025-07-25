@@ -1,6 +1,5 @@
 import {type ReactNode, useEffect, useState} from "react";
 import Popup from "../resources/Popup.tsx";
-import * as React from "react";
 
 interface fullPartner {
     partnerId:number,

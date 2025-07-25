@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 
 interface redirectButtonProps{
-    classes,target,buttonText:string
+    classes: string,target: string,buttonText:string
 }
 
 const RedirectButton = ({classes,target,buttonText}:redirectButtonProps) =>{

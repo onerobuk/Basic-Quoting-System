@@ -2,10 +2,10 @@
 import type {ColDef} from 'ag-grid-community'
 import {AllCommunityModule, ModuleRegistry, themeQuartz} from 'ag-grid-community'
 import {AgGridReact} from "ag-grid-react";
-import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
+import {useContext,useEffect, useState} from "react";
+import {PageContext} from "../../context/PageContext.tsx";
 import PopupCellRenderer from "./partnerPopupCellRenderer.tsx";
-import * as React from "react";
-import Spinner from "../../Spinner.tsx";
+import Spinner from "../../util/Spinner.tsx";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -15,15 +15,17 @@ interface partner {
     seller:boolean
 }
 
-interface partnerGridProps{
-    setHeader:Dispatch<SetStateAction<string>>;
-}
 
-
-const PartnerGrid= ({setHeader}:partnerGridProps) => {
+const PartnerGrid= () => {
     const [partners,setPartners] = useState<partner[]>([]);
+    const {setPage} = useContext(PageContext);
     const [isLoading,setIsLoading] = useState(true);
     const [gridReady,setGridReady] = useState(false);
+
+    useEffect(() => {
+        setPage({pageName:'All Partners',header:'Partners'})
+        getPartners();
+    }, [setPage])
 
     async function getPartners(){
         try{
@@ -69,12 +71,6 @@ const PartnerGrid= ({setHeader}:partnerGridProps) => {
         sortable:true,
         filter:true
     }
-
-    useEffect(() => {
-        setHeader("All Partners");
-        document.title = "Partners";
-        getPartners();
-    }, [setHeader])
 
     if(isLoading) {
         return <Spinner topMessage={''} bottomMessage={'Loading...'}/>

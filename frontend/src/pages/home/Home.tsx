@@ -1,18 +1,20 @@
-import type {Dispatch, SetStateAction} from "react";
+import {useEffect,useContext} from "react";
+import {PageContext} from "../../context/PageContext.tsx";
 import {Separator} from "@base-ui-components/react";
-import RedirectButton from "../../RedirectButton.tsx";
+import RedirectButton from "../../util/RedirectButton.tsx";
 
-
-interface homeProps{
-    setHeaderTitle:Dispatch<SetStateAction<string>>;
-}
 
 const redirectClasses:string = 'bg-neutral-800 p-2 border-black border-2 rounded-md hover:bg-neutral-700 w-35'
 const titleClasses:string = ' text-xl font-bold';
 
 
-const Home = ({setHeaderTitle}:homeProps) =>{
-    setHeaderTitle("Home");
+const Home = () =>{
+    const {setPage} = useContext(PageContext);
+
+    useEffect(()=>{
+        setPage({pageName:'Home',header:'Home'});
+    },[setPage])
+
 
     return (
         <div className="bg-neutral-600 text-white items-center w-full h-screen flex flex-col gap-y-5 ">

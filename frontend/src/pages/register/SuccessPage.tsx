@@ -1,9 +1,8 @@
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import Spinner from "../../Spinner.tsx";
+import Spinner from "../../util/Spinner.tsx";
 
 interface successPageProps{
-    message:string,
     redirectTarget:string
     redirectDelay:number
     topMessage:string,

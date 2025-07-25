@@ -2,10 +2,10 @@
 import type {ColDef} from 'ag-grid-community'
 import {AllCommunityModule, ModuleRegistry, themeQuartz} from 'ag-grid-community'
 import {AgGridReact} from "ag-grid-react";
-import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
+import {useEffect, useState,useContext} from "react";
+import {PageContext} from "../../context/PageContext.tsx";
 import PopupCellRenderer from "./partnerPopupCellRenderer.tsx";
-import * as React from "react";
-import Spinner from "../../Spinner.tsx";
+import Spinner from "../../util/Spinner.tsx";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -17,16 +17,17 @@ interface product {
     currencyCode:string,
 }
 
-interface productGridProps {
-    setHeader:Dispatch<SetStateAction<string>>;
-}
 
-
-const ProductGrid= ({setHeader}:productGridProps) => {
+const ProductGrid= () => {
     const [products,setProducts] = useState<product[]>([]);
     const [isLoading,setIsLoading] = useState(true);
     const [gridReady,setGridReady] = useState(false);
+    const {setPage} = useContext(PageContext);
 
+    useEffect(() => {
+        setPage({pageName:"All Products",header:"Products"});
+        getProducts();
+    }, [setPage])
 
     async function getProducts(){
         try{
@@ -70,12 +71,6 @@ const ProductGrid= ({setHeader}:productGridProps) => {
     const defaultColDef: ColDef = {
         flex: 1
     }
-
-    useEffect(() => {
-        setHeader("All Products");
-        document.title = "Products";
-        getProducts();
-    }, [setHeader])
 
     if(isLoading) {
         return <Spinner topMessage={''} bottomMessage={'Loading...'}/>

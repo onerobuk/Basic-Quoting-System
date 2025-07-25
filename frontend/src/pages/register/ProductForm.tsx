@@ -1,11 +1,8 @@
-import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
+import {useEffect, useState,useContext} from "react";
+import {PageContext} from "../../context/PageContext.tsx";
 import type {SubmitHandler} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import SuccessPage from "./SuccessPage.tsx";
-
-interface productFormProps {
-    updateHeader:Dispatch<SetStateAction<string>>
-}
 
 interface productFormI {
     name:string,
@@ -27,12 +24,13 @@ interface productReq {
     username:string
 }
 
-const ProductForm = ({updateHeader}:productFormProps) =>{
+const ProductForm = () =>{
     const [submitted,setSubmitted] = useState<boolean>(false);
+    const {setPage} = useContext(PageContext);
 
     useEffect(()=>{
-        updateHeader('Register New Product');
-    },[updateHeader])
+        setPage({pageName:'Register New Partner',header:'Register'});
+    },[setPage])
 
     const inputClasses:string = 'border-black border-2 rounded-md p-1 bg-neutral-600 mt-4'
     const errorClasses:string = ' bg-red-200 text-black';
