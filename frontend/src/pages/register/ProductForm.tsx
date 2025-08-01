@@ -29,7 +29,7 @@ const ProductForm = () =>{
     const {setPage} = useContext(PageContext);
 
     useEffect(()=>{
-        setPage({pageName:'Register New Partner',header:'Register'});
+        setPage({pageName:'Register New Product',header:'Register'});
     },[setPage])
 
     const inputClasses:string = 'border-black border-2 rounded-md p-1 bg-neutral-600 mt-4'
@@ -38,7 +38,7 @@ const ProductForm = () =>{
     const {register,handleSubmit,formState:{errors}} = useForm<productFormI>();
     const onSubmit: SubmitHandler<productFormI> = async (data:productFormI)=> {
         const dto:productDTO = {
-            id:null,
+            id:-1,
             ...data
         }
         const request:productReq = {
@@ -90,13 +90,11 @@ const ProductForm = () =>{
 
     return(
         <div className='bg-neutral-600 text-white justify-items-center w-full h-screen pt-1'>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 justify-center p-3">
+            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 justify-center p-3 w-58">
                 <input placeholder='Name' className={inputClasses+(errors.name?errorClasses:' text-white')} {...register("name", {required: true, maxLength: 50})}/>
-                <input placeholder='Price' className={inputClasses+(errors.price?errorClasses:' text-white')}{...register("price", {required: true, pattern: {value: /^\d+(\.\d{2})$/} })}/>
-                {errors.sellerId && <h2>Partner with submitted ID does not exist</h2>}
-                <input placeholder='Seller Id' className={inputClasses + (errors.sellerId ? errorClasses : ' text-white')}{...register("sellerId", {required: true, validate: value => {return validateSeller(value);}})}/>
-                <select className={'pb-2 '+inputClasses+(errors.currencyCode?errorClasses:' text-white')} {...register("currencyCode", {required: true, maxLength: 3})}>
-                    <option value="" selected disabled>Select a Value</option>
+                <input placeholder='Price' className={inputClasses+(errors.price?errorClasses:' text-white')}{...register("price", {required: true, pattern: {value: /^\d+(\.\d{2})$/,message:'Needs to be in currency format. Eg. 20.00'} })}/>
+                <select defaultValue='' className={'pb-2 '+inputClasses+(errors.currencyCode?errorClasses:' text-white')} {...register("currencyCode", {required: true, maxLength: 3})}>
+                    <option value="" disabled hidden>Select a Currency</option>
                     <option value="USD">USD</option>
                     <option value="GBP">GBP</option>
                     <option value='EUR'>EUR</option>
@@ -108,6 +106,8 @@ const ProductForm = () =>{
                     <option value='HKD'>HKD</option>
                     <option value='CNY'>CNY</option>
                 </select>
+                <input placeholder='Seller Id' className={inputClasses + (errors.sellerId ? errorClasses : ' text-white')}{...register("sellerId", {required: true, validate: value => {return validateSeller(value);}})}/>
+                {errors.sellerId && <h2 className='text-center text-red-600 pt-1'>Partner with submitted ID does not exist</h2>}
                 <button type="submit" className='bg-neutral-800 p-1 border-black border-2 rounded-md mt-3.5 hover:bg-neutral-700'>Submit</button>
             </form>
         </div>

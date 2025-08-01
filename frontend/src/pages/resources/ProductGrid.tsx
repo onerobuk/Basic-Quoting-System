@@ -4,8 +4,8 @@ import {AllCommunityModule, ModuleRegistry, themeQuartz} from 'ag-grid-community
 import {AgGridReact} from "ag-grid-react";
 import {useEffect, useState,useContext} from "react";
 import {PageContext} from "../../context/PageContext.tsx";
-import PopupCellRenderer from "./partnerPopupCellRenderer.tsx";
 import Spinner from "../../util/Spinner.tsx";
+import PartnerPopupCellRenderer from '../../util/PartnerPopupCellRenderer.tsx';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -63,7 +63,8 @@ const ProductGrid= () => {
         {field: "price"},
         {
             field: "sellerId",
-            cellRenderer: PopupCellRenderer
+            headerName:'Seller',
+            cellRenderer: PartnerPopupCellRenderer
         },
         {field: "currencyCode"}
     ]
@@ -73,7 +74,11 @@ const ProductGrid= () => {
     }
 
     if(isLoading) {
-        return <Spinner topMessage={''} bottomMessage={'Loading...'}/>
+        return (
+            <div className="flex h-dvh w-full bg-neutral-600 justify-center">
+                <Spinner topMessage={''} bottomMessage={'Loading...'}/>
+            </div>
+        );
     }
     else if (products.length==0){
         return(

@@ -29,11 +29,13 @@ public class quoteController {
         return ResponseEntity.ok(new quoteDTO(quoteService.getQuoteById(id)));
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createQuote(@RequestBody revisionRequest request){
-        quoteService.createQuote(request);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
+//    @PostMapping
+//    public ResponseEntity<Void> createQuote(@RequestBody revisionRequest request){
+//        quoteService.createQuote(request);
+//        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+//    }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> addRevision(@RequestBody revisionRequest request,@PathVariable int id){

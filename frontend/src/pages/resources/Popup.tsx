@@ -1,17 +1,17 @@
 import {Dialog} from "@base-ui-components/react";
-import * as React from 'react';
+import type {ReactNode} from "react";
 
 interface popupProps{
-    buttonName:string,
+    buttonName:string|number,
     modalTitle:string
-    modalContent:string
+    modalContent:string|ReactNode
 }
 
 const Popup = ({buttonName,modalTitle,modalContent}:popupProps) =>{
 
     return(
         <Dialog.Root>
-            <Dialog.Trigger className='text-blue-600 underline pr-55'>
+            <Dialog.Trigger className='text-blue-600 underline text-center'>
                 {buttonName}
             </Dialog.Trigger>
             <Dialog.Portal>

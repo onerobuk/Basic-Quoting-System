@@ -14,6 +14,7 @@ public class productDTO {
     private String name;
     private double price;
     private int sellerId;
+    private String sellerName;
     private String currencyCode;
 
     public productDTO(productEntity product){
@@ -21,6 +22,7 @@ public class productDTO {
         this.name = product.getProductName();
         this.price = product.getProductPrice();
         this.sellerId = product.getPartnerEntity().getPartnerId();
+        this.sellerName=product.getPartnerEntity().getPartnerName();
         this.currencyCode = product.getProductCurrency();
     }
 }

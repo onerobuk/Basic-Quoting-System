@@ -4,7 +4,7 @@ import {AllCommunityModule, ModuleRegistry, themeQuartz} from 'ag-grid-community
 import {AgGridReact} from "ag-grid-react";
 import {useContext,useEffect, useState} from "react";
 import {PageContext} from "../../context/PageContext.tsx";
-import PopupCellRenderer from "./partnerPopupCellRenderer.tsx";
+import PopupCellRenderer from "../../util/PartnerPopupCellRenderer.tsx";
 import Spinner from "../../util/Spinner.tsx";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -40,7 +40,7 @@ const PartnerGrid= () => {
             }
             console.log("Partner GET request success");
             const data = await response.json();
-            const newPartners:partner[] = data.map((item)=>{
+            const newPartners:partner[] = data.map((item: { id: number; name: string; seller: boolean; })=>{
                 console.log(item);
                 return {
                 id: item.id,
@@ -58,11 +58,14 @@ const PartnerGrid= () => {
     }
 
     const colDefs: ColDef<partner>[] = [
+        {field: "id",},
         {
-            field: "id",
+            field: "name",
             cellRenderer:PopupCellRenderer,
+            cellRendererParams:{
+                nameColumn:true
+            }
         },
-        {field: "name"},
         {field: "seller"}
     ]
 
@@ -73,7 +76,11 @@ const PartnerGrid= () => {
     }
 
     if(isLoading) {
-        return <Spinner topMessage={''} bottomMessage={'Loading...'}/>
+        return (
+            <div className="flex h-dvh w-full bg-neutral-600 justify-center">
+                <Spinner topMessage={''} bottomMessage={'Loading...'}/>
+            </div>
+        )
     }
     else if (partners.length==0){
         return(

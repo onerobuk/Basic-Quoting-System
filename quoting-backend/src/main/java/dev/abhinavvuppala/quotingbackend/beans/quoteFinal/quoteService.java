@@ -28,13 +28,13 @@ public class quoteService {
         return repository.findById(id).orElseThrow(()->new EntityNotFoundException(String.format("Quote with id %d not found",id)));
     }
 
-    @Transactional
-    public void createQuote(revisionRequest request){
-        partnerEntity buyer = partnerService.getPartnerById(request.getBuyerId());
-        quoteFinalEntity newQuote = quoteFinalEntity.createQuote(request.getUsername(),buyer);
-        revisionService.createRevision(request,newQuote);
-        repository.save(newQuote);
-    }
+//    @Transactional
+//    public void createQuote(revisionRequest request){
+//        partnerEntity buyer = partnerService.getPartnerById(request.getBuyerId());
+//        quoteFinalEntity newQuote = quoteFinalEntity.createQuote(request.getUsername(),buyer);
+//        revisionService.createRevision(request,newQuote);
+//        repository.save(newQuote);
+//    }
 
 
     @Transactional

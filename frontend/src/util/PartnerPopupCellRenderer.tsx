@@ -1,5 +1,7 @@
 import {type ReactNode, useEffect, useState} from "react";
-import Popup from "../resources/Popup.tsx";
+import type { CustomCellRendererProps } from 'ag-grid-react';
+import Popup from "../pages/resources/Popup.tsx";
+import Spinner from "./Spinner.tsx";
 
 interface fullPartner {
     partnerId:number,
@@ -10,13 +12,18 @@ interface fullPartner {
     seller:boolean
 }
 
-const PopupCellRenderer = (props) =>{
-    const [isLoading,setIsLoading] = useState(true)
-    const [partner,setPartner] = useState<fullPartner>([]);
+type PopupProps = CustomCellRendererProps &{
+    nameColumn:boolean
+}
+
+
+const PartnerPopupCellRenderer = (props:PopupProps ) =>{
+    const [partner,setPartner] = useState<fullPartner|undefined>(undefined);
 
     useEffect(() => {
-        getPartnerById(props.value)
-    }, [props.value]);
+        const idValue = (props.nameColumn) ? props.data.id : props.value
+        getPartnerById(idValue)
+    }, [props]);
 
     if (!props.context?.gridReady) {
         return null;
@@ -48,10 +55,17 @@ const PopupCellRenderer = (props) =>{
             setPartner(newPartner);
         } catch (error){
             console.error('Partner Fetch error: ',error);
-        } finally {
-            setIsLoading(false);
         }
     }
+
+    if (!partner){
+        return (
+            <Popup buttonName={'undefined'} modalTitle={''}
+                   modalContent={<Spinner topMessage={""} bottomMessage={"Loading Content..."}/>}
+            />
+        )
+    }
+
     const partnerDesc:ReactNode =(
         <span className='grid grid-cols-2'>
             <label>Id: </label><label>{partner.partnerId}</label>
@@ -65,10 +79,10 @@ const PopupCellRenderer = (props) =>{
 
     return (
         <Popup
-            buttonName={props.value}
-            modalTitle={isLoading?'':partner.partnerName}
-            modalContent={isLoading?<label>Loading...</label>:partnerDesc}
+            buttonName={`${partner.partnerName}`}
+            modalTitle={partner.partnerName}
+            modalContent={partnerDesc}
         />
     )
 }
-export default PopupCellRenderer;
+export default PartnerPopupCellRenderer;
