@@ -6,6 +6,7 @@ import ProductGrid from "./pages/resources/ProductGrid.tsx";
 import PartnerForm from "./pages/register/PartnerForm.tsx";
 import ProductForm from "./pages/register/ProductForm.tsx";
 import {PageProvider} from "./context/PageContext.tsx";
+import QuoteCreationPage from "./pages/quote/QuotelineGrid.tsx";
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
                         <Route path="/resources/partners" element={<PartnerGrid/>}/>
                         <Route path='/register/partner' element={<PartnerForm/>} />
                         <Route path='/register/product' element={<ProductForm/>} />
+                        <Route path='/quotes/create' element={<QuoteCreationPage/>}/>
                     </Routes>
                 </Layout>
             </PageProvider>

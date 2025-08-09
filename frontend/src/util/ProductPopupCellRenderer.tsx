@@ -1,4 +1,5 @@
 import {type ReactNode, useEffect, useState} from "react";
+import type { CustomCellRendererProps } from 'ag-grid-react';
 import Popup from "../pages/resources/Popup.tsx";
 import Spinner from "./Spinner.tsx";
 
@@ -10,16 +11,14 @@ interface fullProduct {
     currencyCode:string
 }
 
-const PartnerPopupCellRenderer = (props: { value: number; context: { gridReady: never; }; }) =>{
+const PartnerPopupCellRenderer = (props:CustomCellRendererProps) =>{
     const [product,setProduct] = useState<fullProduct|undefined>(undefined);
 
     useEffect(() => {
-        getProductById(props.value)
-    }, [props.value]);
+        const id = props.data.id;
+        getProductById(id);
+    }, [props]);
 
-    if (!props.context?.gridReady) {
-        return null;
-    }
 
     async function getProductById(id:number){
 

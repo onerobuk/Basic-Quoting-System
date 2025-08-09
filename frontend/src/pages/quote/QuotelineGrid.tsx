@@ -2,16 +2,19 @@
 import type {ColDef} from 'ag-grid-community'
 import {AllCommunityModule, ModuleRegistry, themeQuartz} from 'ag-grid-community'
 import {AgGridReact} from "ag-grid-react";
-import PopupCellRenderer from "../../util/partnerPopupCellRenderer.tsx";
+import PopupCellRenderer from "../../util/ProductPopupCellRenderer.tsx";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface quoteline{
+    productName:string,
     productId:number,
-
+    quantity:number,
+    price:number,
+    currencyCode:string
 }
 
-const quoteCreationPage = () =>{
+const QuotelineGrid = () =>{
 
     const defaultColDef: ColDef = {
         flex: 1,
@@ -22,8 +25,15 @@ const quoteCreationPage = () =>{
     const colDefs: ColDef<quoteline>[] = [
         {
             field: "productId",
-            cellRenderer:PopupCellRenderer,
+            headerName: "Id"
         },
+        {
+            field: "productName",
+            headerName:"Name",
+            cellRenderer:PopupCellRenderer
+        },
+        {field:"quantity"},
+        {field: "price"},
     ]
 
     return (
@@ -31,7 +41,6 @@ const quoteCreationPage = () =>{
             <div style={{width: "50%", height: "80%"}}>
                 <AgGridReact
                     theme={themeQuartz}
-
                     columnDefs={colDefs}
                     defaultColDef={defaultColDef}
                 />
@@ -39,4 +48,4 @@ const quoteCreationPage = () =>{
         </div>
     )
 }
-export default quoteCreationPage;
+export default QuotelineGrid;

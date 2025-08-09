@@ -70,9 +70,13 @@ const PartnerPopupCellRenderer = (props:PopupProps ) =>{
         <span className='grid grid-cols-2'>
             <label>Id: </label><label>{partner.partnerId}</label>
             <label>Name: </label><label>{partner.partnerName}</label>
-            <label>Email: </label><label>{partner.partnerEmail}</label>
-            <label>Shipping Address: </label><label>{partner.shippingAddress}</label>
-            <label>Billing Address: </label><label>{partner.billingAddress}</label>
+            {partner.seller &&
+                <>
+                    <label>Email: </label><label>{partner.partnerEmail}</label>
+                    <label>Shipping Address: </label><label>{partner.shippingAddress}</label>
+                    <label>Billing Address: </label><label>{partner.billingAddress}</label>
+                </>
+            }
             <label>Seller: </label><input className="justify-self-start mt-1.5 w-4 h-4 border-2 rounded-md text-black" checked={partner.seller} type='checkbox' disabled/>
         </span>
     )
